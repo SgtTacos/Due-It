@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Due-It</string>
     <string name="title">DUE-IT</string>
-    <string name="button1">BUTTON1</string>
-    <string name="button2">BUTTON2</string>
+    <string name="hint">Enter Security Token</string>
+    <string name="button1">SECURITY</string>
+    <string name="button2">DUES</string>
 </resources>
