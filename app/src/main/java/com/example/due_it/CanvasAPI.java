@@ -7,12 +7,13 @@ import java.util.Scanner;
 
 public class CanvasAPI {
     private static SharedPreferences sp;
-    public static void main(String[] args) {
+    public static void Canvas(String[] args) {
         HTTPHelper httpHelper = new HTTPHelper();
         Scanner scanner = new Scanner(System.in);
         SharedPreferences sp = new MainActivity().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
 
-        /** Each user can get their own Canvas Token by going to:
+        /** Provided by Brother Macbeth
+        * Each user can get their own Canvas Token by going to:
         * https://byui.instructure.com/profile/settings and select "New Access Token".
         * Only do this once and copy the token to the textedit so it can be saved
         * to be used again later.

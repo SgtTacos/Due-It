@@ -13,11 +13,20 @@ public class MainActivity extends AppCompatActivity {
     private static SharedPreferences sp;
     public String secToken;
 
-    // This is the Main Activity Class
+    // This is the Main Activity Class.
+    // This will command the app work.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
+        EditText hint1 = (EditText) findViewById(R.id.editToken);
+        if (sp == null) {
+            hint1.setHint("Security Access Token Required");
+        } else {
+            hint1.setHint((CharSequence) sp);
+            hint1.setText((CharSequence) sp);
+        }
     }
 
     public void secToken(View view) {
@@ -25,17 +34,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String securityToken() {
-        SharedPreferences sp = getApplicationContext().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
-        if (sp == null) {
-            String sec_Token = securityToken();
+        String sec_Token = securityToken();
             if (sec_Token == "") {
                 Toast.makeText(MainActivity.this, "Missing Token", Toast.LENGTH_SHORT).show();
             }
             saveToken(sec_Token);
-        } else {
-            SharedPreferences secToken = sp;
-        }
-        return secToken;
+            return sec_Token;
     }
 //
 
