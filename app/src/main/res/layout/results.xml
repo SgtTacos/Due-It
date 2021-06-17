@@ -7,6 +7,7 @@
     tools:context=".Results">
 
     <ListView
+        android:id="@+id/list"
         android:layout_width="413dp"
         android:layout_height="636dp"
         android:layout_marginStart="8dp"

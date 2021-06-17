@@ -19,7 +19,7 @@ public class HTTPHelper {
      * @param authorization - Content of the optional authorization header (ignored if its null)
      * @return - The HTTP Response string.  Note that this will be null if there was an error
      */
-    public String readHTTP(String url, String authorization) {
+    public static String readHTTP(String url, String authorization) {
         try {
             /** Convert the String url to a URL object which will allow a connection to be established */
             URL urlObj = new URL(url);

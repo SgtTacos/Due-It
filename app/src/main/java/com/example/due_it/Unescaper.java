@@ -1,18 +1,20 @@
 package com.example.due_it;
 
-/** This class is to unescape the html escape characters weighing
- * the result in the field Assignment_description */
+/** This class is to convert from escape codes all the tag characters from
+ *  the html format characters weighing
+ * the result in the field Assignment_description
+ * */
 
 public class Unescaper {
-    /* unescape_string()
+    /** unescape_string()
      * Class author: Tom Christiansen <tchrist@perl.com>
      * Class Creation-Date: Sun Nov 28 12:55:24 MST 2010
      */
 
     public final static
     String unescape_string(String oldstr) {
-        /*
-         * In contrast to fixing Java's broken regex charclasses, this one need be no bigger,
+        /**
+         * In contrast to fixing Java's broken regex char_classes, this one need be no bigger,
          * as unescaping shrinks the string here, where in the other one, it grows it.
          */
         StringBuffer newstr = new StringBuffer(oldstr.length());
@@ -20,7 +22,7 @@ public class Unescaper {
         for (int i = 0; i < oldstr.length(); i++) {
             int cp = oldstr.codePointAt(i);
             if (oldstr.codePointAt(i) > Character.MAX_VALUE) {
-                i++; /****WE HATES UTF-16! WE HATES IT FOREVERSES!!!****/
+                i++;
             }
             if (!saw_backslash) {
                 if (cp == '\\') {
@@ -52,7 +54,7 @@ public class Unescaper {
                     break; /* switch */
                 case 'e':  newstr.append('\033');
                     break; /* switch */
-                /*
+                /**
                  * A "control" character is what you get when you xor its codepoint with '@'==64.
                  * This only makes sense for ASCII, and may not yield a "control" character after all.
                  * Strange but true: "\c{" is ";", "\c}" is "=", etc.
@@ -69,8 +71,8 @@ public class Unescaper {
                 }
                 case '8':
                 case '9': die("illegal octal digit");
-                    /* NOTREACHED */
-                    /*
+                    /** NOTREACHED */
+                    /**
                      * may be 0 to 2 octal digits following this one
                      * so back up one for fallthrough to next case;
                      * unread this digit and fall through to next case.
@@ -82,8 +84,8 @@ public class Unescaper {
                 case '5':
                 case '6':
                 case '7': --i;
-                    /* FALLTHROUGH */
-                    /*
+                    /** FALLTHROUGH */
+                    /**
                      * Can have 0, 1, or 2 octal digits following a 0
                      * this permits larger values than octal 377, up to
                      * octal 777.
@@ -123,7 +125,7 @@ public class Unescaper {
                     newstr.append(Character.toChars(value));
                     i += digits-1;
                     break; /* switch */
-                } /* end case '0' */
+                } /** end case '0' */
                 case 'x':  {
                     if (i+2 > oldstr.length()) {
                         die("string too short for \\x escape");
@@ -212,7 +214,7 @@ public class Unescaper {
                 }
                 default:   newstr.append('\\');
                     newstr.append(Character.toChars(cp));
-                    /*
+                    /**
                      * say(String.format(
                      *       "DEFAULT unrecognized escape %c passed through",
                      *       cp));
@@ -221,13 +223,13 @@ public class Unescaper {
             }
             saw_backslash = false;
         }
-        /* weird to leave one at the end */
+        /** weird to leave one at the end */
         if (saw_backslash) {
             newstr.append('\\');
         }
         return newstr.toString();
     }
-    /*
+    /**
      * Return a string "U+XX.XXX.XXXX" etc, where each XX set is the xdigits of the logical Unicode
      * code point. No bloody brain-damaged UTF-16 surrogate crap, just true logical characters.
      */
@@ -236,7 +238,7 @@ public class Unescaper {
         if (s.length() == 0) {
             return "";
         }
-        /* This is just the minimum; sb will grow as needed. */
+        /** This is just the minimum; sb will grow as needed. */
         StringBuffer sb = new StringBuffer(2 + 3 * s.length());
         sb.append("U+");
         for (int i = 0; i < s.length(); i++) {
