@@ -2,7 +2,7 @@ package com.example.due_it;
 
 /** This class is to convert from escape codes all the tag characters from
  *  the html format characters weighing
- * the result in the field Assignment_description
+ *  the result in the field Assignment_description
  * */
 
 public class Unescaper {
