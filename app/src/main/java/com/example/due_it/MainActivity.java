@@ -82,3 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
 }
 //Hey this is Rachel Vargas!
+//https://developer.android.com/guide/topics/ui/layout/recyclerview
+//https://stackoverflow.com/a/40584425/10078500
+
+

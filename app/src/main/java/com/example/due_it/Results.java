@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /** This class is in charge of doing what is necessary to
  * produce the results expected by the user:
  */
@@ -37,12 +38,15 @@ class Results extends AppCompatActivity implements Runnable {
         return null;
     }
 
+   /**
+     * This method is in charge of calling the first API call
+     * to get the courses information for the user
+     * Iterate for each standard grading course calling the method assignmentsCall
+     * to get their individual assignments.
+     */
     public String coursesCall() {
-        /** This method is in charge of calling the first API call
-         * to get the courses information for the user
-         * Iterate for each standard grading course calling the method assignmentsCall
-         * to get their individual assignments.
-         */
+
+
 
         return null;
     }
