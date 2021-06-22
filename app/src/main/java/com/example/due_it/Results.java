@@ -36,7 +36,7 @@ class Results extends AppCompatActivity implements Runnable {
         setContentView(R.layout.results);
     }
 
-    /** This method is in charge of  first making the call for courses.
+    /** This method is in charge of first making the call for courses.
      *
      *  Since the parameter "enrollment_state = "active" exists and is accepted in the API call,
      *  it helps to retrieve only the courses where the user is enrolled for the current semester.
