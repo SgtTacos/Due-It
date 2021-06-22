@@ -36,14 +36,30 @@ class Results extends AppCompatActivity implements Runnable {
         setContentView(R.layout.results);
     }
 
-    /** This method is in charge of  first making the call for courses
+    /** This method is in charge of  first making the call for courses.
+     *
+     *  Since the parameter "enrollment_state = "active" exists and is accepted in the API call,
+     *  it helps to retrieve only the courses where the user is enrolled for the current semester.
+     *  Therefore we do not need to change the pagination. Nobody enrolls in more than ten courses.
+     *
+     **********************************************************************************************
+     **  This method is designed to retrieve, select and provide AUTOMATICALLY all assignments    *
+     **  from all the courses where the user is enrolled, without any additional button pressing  *
+     **  or further additional interaction from the user.                                         *
+     **********************************************************************************************
+     *
      *  When the call for courses returns, the data is stored in the classes Courses and CourseItem
      *  After getting the individual information courses, begins the iteration on each one to
-     *  define if its field grading_standard_id is nul or not to proceed to the second iteration
+     *  define if its field grading_standard_id is null or not to proceed to the second iteration
      *  to get all the upcoming assignments for each course.
-     *  During the iteration of assignments we proceed to fill a list with the valid assignments
-     *  When all the assignments and courses has ended, we have the complete list and
-     *  we need to proceed to sort it by dat and course
+     *
+     *  During the iteration of assignments we proceed to fill a list with the valid assignments.
+     *  Depending on if a week has more than ten assignments for each course we will need to
+     *  make another assignment call or change the pagination to twenty.
+     *  When all the courses with their assignments have been retrieved,
+     *  we have the complete list of courses and assignments for the user.
+     *  We need to proceed to sort it by date and course, inserting the code before the runOnUiThread
+     *  which will return the sorted list to be shown on the screen.
      */
     @Override
     public void run() {
@@ -75,9 +91,9 @@ class Results extends AppCompatActivity implements Runnable {
                 }
             }
         }
-/** at this point we should have the complete list of due assignments
- * TODO still WE NEED TO SORT THE OBTAINED LIST BY DATE AND COURSE
-  */
+/** At this point we should have the complete list of due assignments
+  * TODO still WE NEED TO SORT THE OBTAINED LIST BY DATE AND COURSE
+*/
         activity.runOnUiThread(() -> {
             activity.resultsResponse(due_assignments);
         });

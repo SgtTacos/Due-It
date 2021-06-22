@@ -3,8 +3,8 @@ package com.example.due_it;
 import java.util.List;
 
     /** This class will contain all the returned Assignments data from the second API call
-     *   With the help of AssignmentItem class will extract fields:
-     *   "due_at", "points_possible", "name", "allowed_attempts" and "submission_types"
+     *  With the help of the AssignmentItem class will extract fields:
+     *  "due_at", "points_possible", "name", "allowed_attempts" and "submission_types"
      */
 
     public class Assignments {
