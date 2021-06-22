@@ -6,10 +6,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-
-
-
-
 /** This class is the HTTPHelper class provided by the instructor */
 /**
  * Helper class to send HTTP requests (the url) and receive responses.

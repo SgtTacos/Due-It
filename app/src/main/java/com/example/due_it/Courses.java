@@ -9,7 +9,13 @@ import java.util.List;
  * the iterations of assignments API calls that request assignment for each course
  */
 public class Courses {
-    List<Course> courses;
+    private List<CourseItem> courseItems;
 
+    public List<CourseItem> getCourseItems() {
+        return courseItems;
+    }
+    public void setCourseItems(List<CourseItem> courseItems) {
+        this.courseItems = courseItems;
+    }
 
 }

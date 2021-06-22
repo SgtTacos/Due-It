@@ -5,10 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static SharedPreferences sp;
@@ -69,15 +73,14 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText((Context) sp,"Token was Saved", Toast.LENGTH_LONG).show();
     }
 
-    public void duesResults(View view) {
-        /** This method will run when DUES button is clicked
-         *  It is in charge of requesting the dues results
-         *  and initiating it in a new thread
+    void resultsResponse(List<String> due_assignments) {
+        /** This method exists to receive the results response,
+         *  translate it to the list and display the list
          */
-        ListView list = findViewById(R.id.list);
-        Results current = new Results();
-        Thread localThread = new Thread(current);
-        localThread.start();
+        Log.d("MainActivity", "Results: " + due_assignments);
+        ArrayAdapter<String> ListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, due_assignments);
+        ListView listview = (ListView) findViewById(R.id.list);
+        listview.setAdapter(ListAdapter);
     }
 
 }
