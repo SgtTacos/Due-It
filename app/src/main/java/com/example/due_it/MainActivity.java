@@ -73,6 +73,17 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText((Context) sp,"Token was Saved", Toast.LENGTH_LONG).show();
     }
 
+    public void duesResults(View view) {
+        /** This method will run when DUES button is clicked
+         *  It is in charge of requesting the dues results
+         *  and initiating it in a new thread
+         */
+        ListView list = findViewById(R.id.list);
+        Results current = new Results();
+        Thread localThread = new Thread(current);
+        localThread.start();
+    }
+
     void resultsResponse(List<String> due_assignments) {
         /* This method exists to receive the results response,
            translate it to the list and display the list
