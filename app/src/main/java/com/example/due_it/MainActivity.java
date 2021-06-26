@@ -14,23 +14,23 @@ import android.widget.Toast;
 
 import java.util.List;
 
+/** This is the Main Activity Class.
+ * This class will command the app work.
+ */
 public class MainActivity extends AppCompatActivity {
     private static SharedPreferences sp;
     public String sec_Token;
 
-    /* This is the Main Activity Class.
-     * This class will command the app work.
-     */
 
+    /** Loading the app, it will retrieve a security token from SharedPreferences
+     If a Token is present, it will be shown on screen and copied to text
+     If there is no token in SharedPreferences
+     a hint requesting Token will be shown
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /* Loading the app, it will retrieve a security token from SharedPreferences
-          If a Token is present, it will be shown on screen and copied to text
-          If there is no token in SharedPreferences
-          a hint requesting Token will be shown
-         */
         EditText hint1 = findViewById(R.id.editToken);
         if (sp == null) {
             hint1.setHint("Security Access Token Required");
@@ -41,19 +41,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /** This method will run when SECURITY Button is clicked
+      Supposedly user will press security only if a new Token is provided
+      Anyways if there is already a previous existing token, it will be re-saved
+     */
     public void secToken(View view) {
-        /* This method will run when SECURITY Button is clicked
-          Supposedly user will press security only if a new Token is provided
-          Anyways if there is already a previous existing token, it will be re-saved
-         */
         sec_Token = securityToken();
     }
 
+    /** This method is invoked by method secToken and it is in charge of
+     *  getting the text content from the EditView object and verifying
+     *  that it is not null. If it is will show a toast message.
+     */
     private String securityToken() {
-        /* This method is invoked by method secToken and it is in charge of
-         *  getting the text content from the EditView object and verifying
-         *  that it is not null. If it is will show a toast message.
-         */
         sec_Token = findViewById(R.id.editToken).toString();
         Toast.makeText(MainActivity.this, "Missing Token", Toast.LENGTH_SHORT).show();
 
@@ -61,11 +61,11 @@ public class MainActivity extends AppCompatActivity {
         return sec_Token;
     }
 
+    /** This method is invoked by securityToken and it is in charge of
+       saving the Token in SharedPreferences for future uses
+       It shows a Toast message indicating Token was saved
+     */
     public static void saveToken(String sec_token) {
-        /* This method is invoked by securityToken and it is in charge of
-           saving the Token in SharedPreferences for future uses
-           It shows a Toast message indicating Token was saved
-         */
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("MyToken", sec_token);
         editor.apply();
@@ -73,21 +73,21 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText((Context) sp,"Token was Saved", Toast.LENGTH_LONG).show();
     }
 
+    /** This method will run when DUES button is clicked
+     *  It is in charge of requesting the dues results
+     *  and initiating it in a new thread
+     */
     public void duesResults(View view) {
-        /** This method will run when DUES button is clicked
-         *  It is in charge of requesting the dues results
-         *  and initiating it in a new thread
-         */
         ListView list = findViewById(R.id.list);
         Results current = new Results();
         Thread localThread = new Thread(current);
         localThread.start();
     }
 
+    /** This method exists to receive the results response,
+       translate it to the list and display the list
+     */
     void resultsResponse(List<String> due_assignments) {
-        /* This method exists to receive the results response,
-           translate it to the list and display the list
-         */
         Log.d("MainActivity", "Results: " + due_assignments);
         ArrayAdapter<String> ListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, due_assignments);
         ListView listview = (ListView) findViewById(R.id.list);
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
-//Hey this is Rachel Vargas!
+
 //https://developer.android.com/guide/topics/ui/layout/recyclerview
 //https://stackoverflow.com/a/40584425/10078500
 
