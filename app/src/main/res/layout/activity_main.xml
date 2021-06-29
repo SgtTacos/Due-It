@@ -34,7 +34,7 @@
         android:layout_marginRight="85dp"
         android:backgroundTint="@color/red"
         android:gravity="center_vertical|center_horizontal"
-        android:onClick="secToken"
+        android:onClick="saveToken"
         android:text="@string/button1"
         android:textColor="@color/white"
         android:textSize="30sp"
