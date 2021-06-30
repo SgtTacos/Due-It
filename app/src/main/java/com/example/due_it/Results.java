@@ -14,8 +14,6 @@ import java.util.List;
 class Results extends AppCompatActivity implements Runnable {
     private static SharedPreferences sp;
     private MainActivity activity;
-    public String result1;
-    public String result2;
     public String courses;
     public String assignments;
     public String courseID;
@@ -37,29 +35,24 @@ class Results extends AppCompatActivity implements Runnable {
     }
 
     /** This method is in charge of first making the call for courses.
-     *
      *  Since the parameter "enrollment_state = "active" exists and is accepted in the API call,
      *  it helps to retrieve only the courses where the user is enrolled for the current semester.
      *  Therefore we do not need to change the pagination. Nobody enrolls in more than ten courses.
-     *
      **********************************************************************************************
      **  This method is designed to retrieve, select and provide AUTOMATICALLY all assignments    *
      **  from all the courses where the user is enrolled, without any additional button pressing  *
      **  or further additional interaction from the user.                                         *
      **********************************************************************************************
-     *
-     *  When the call for courses returns, the data is stored in the classes Courses and CourseItem
-     *  After getting the individual information courses, begins the iteration on each one to
-     *  define if its field grading_standard_id is null or not to proceed to the second iteration
-     *  to get all the upcoming assignments for each course.
-     *
-     *  During the iteration of assignments we proceed to fill a list with the valid assignments.
-     *  Depending on if a week has more than ten assignments for each course we will need to
-     *  make another assignment call or change the pagination to twenty.
-     *  When all the courses with their assignments have been retrieved,
-     *  we have the complete list of courses and assignments for the user.
-     *  We need to proceed to sort it by date and course, inserting the code before the runOnUiThread
-     *  which will return the sorted list to be shown on the screen.
+     *  When the call for courses returns, the data is stored in the classes Courses and
+     *  CourseItem. After getting the individual information courses, begins the iteration on each
+     *  one select data fields and to proceed to the second iteration to get all the desired
+     *  assignments for each course with a valid field grading_standard_id
+     *********************************************************************************************
+     *  During the iteration of assignments an output list will be filled with the assignments.
+     *  When all the courses with their assignments have been retrieved, we have the complete
+     *  list of courses and assignments required by the user.
+     *  A final step is the sort of the list by date and course, inserting the code before the
+     *  runOnUiThread which will return the sorted list to be shown on the screen.
      */
     @Override
     public void run() {

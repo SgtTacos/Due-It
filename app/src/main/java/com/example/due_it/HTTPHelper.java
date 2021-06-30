@@ -6,22 +6,20 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/** This class is the HTTPHelper class provided by the instructor */
-/**
+/** This is the HTTPHelper class provided by the instructor
  * Helper class to send HTTP requests (the url) and receive responses.
  * Note that the URL provided can also have parameters including keys.
  */
 public class HTTPHelper {
     /**
      * Will send the HTTP GET Request per the URL provided and listen for the the response.
-     *
      * @param url - The HTTP Request URL (including any parameters)
      * @param authorization - Content of the optional authorization header (ignored if its null)
      * @return - The HTTP Response string.  Note that this will be null if there was an error
      */
     public static String readHTTP(String url, String authorization) {
         try {
-            /** Convert the String url to a URL object which will allow a connection to be established */
+            /** Convert the String url to a URL object for a connection to be established */
             URL urlObj = new URL(url);
 
             /** Open a Connection to the remote site.  This will send the HTTP Get request */
