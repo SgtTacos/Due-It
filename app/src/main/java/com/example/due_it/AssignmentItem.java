@@ -3,13 +3,12 @@ package com.example.due_it;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
-public class AssignmentItem {
-    /** This class will unfold the several Assignments data from the second API call
-     *   It will be necessary to extract fields:
-     *   "due_at", "points_possible", "name", "allowed_attempts" and "submission_types",
-     *   and "id", just in case
-     */
+/** This class will unfold the several Assignments data from the second API call
+ *   It will be necessary to extract fields:
+ *   "id", "name", "due_at", "points_possible", "allowed_attempts" and "submission_types"
+ */
 
+public class AssignmentItem {
     @SerializedName("id")
     private String As_id;
     @SerializedName("name")

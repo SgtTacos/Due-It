@@ -7,7 +7,6 @@ import java.util.List;
  *  With the help of the AssignmentItem class will extract fields:
  *  "due_at", "points_possible", "name", "allowed_attempts" and "submission_types"
  */
-
 public class Assignments {
     @SerializedName("masterAssignments")
     private List<AssignmentItem> assignmentItems;
