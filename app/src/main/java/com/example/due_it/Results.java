@@ -42,7 +42,6 @@ class Results extends AppCompatActivity implements Runnable {
     public String op_bucket;
     public String minsec = ":59:59";
     public String endsem = "2021-07-22T05:59:59Z";
-    public String or_by = "&order_by=due_at";
     public String token = "";
 
     @Override
