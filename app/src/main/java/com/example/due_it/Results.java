@@ -73,7 +73,7 @@ class Results extends AppCompatActivity implements Runnable {
     public void run() {
         token = ""; // Here is needed the token transfer from SharedPreferences
         op_bucket = op_bu_fu; //Option of results, could be defined by buttons variety
-        courses = HTTPHelper.readHTTP("https://canvas.instructure.com/api/v1/courses"
+        courses = HTTPHelper.readHTTP("https://canvas.instructure.com/api/v1/courses" + pp
                 + es, "Bearer " + token);
         mycourses = "{\"masterCourses\":"+courses+"}";
         Gson gson_c = new Gson();

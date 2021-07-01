@@ -100,7 +100,7 @@
         android:lineSpacingExtra="8sp"
         android:text="Due-It"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/green"
+        android:textColor="@color/black"
         android:textSize="34sp"
         android:textStyle="bold"
         android:typeface="normal"

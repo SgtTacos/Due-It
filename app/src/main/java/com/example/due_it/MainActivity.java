@@ -28,14 +28,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        EditText hint1 = findViewById(R.id.editToken);
-        if (SEC_TOKEN == "empty") {
-            hint1.setHint("Security Access Token Required");
-        } else {
-            //sp = getApplicationContext().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
-            //hint1.setHint((CharSequence) sp.getString("MyToken", sec_Token));
-            //hint1.setText((CharSequence) sp.getString("MyToken", sec_Token));
-        }
+
+        loadData();
     }
 
     /** This method is invoked by securityToken and it is in charge of
@@ -45,9 +39,27 @@ public class MainActivity extends AppCompatActivity {
     public void saveToken(View view) {
         SharedPreferences sp = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        editor.putString(SEC_TOKEN, findViewById(R.id.editToken).toString());
-        editor.apply();
-        Toast.makeText(this,"Token was Saved", Toast.LENGTH_LONG).show();
+
+        EditText tokenText = findViewById(R.id.editToken);
+
+        if (tokenText.getText().toString().matches("")) {
+            Toast.makeText(this,"Text field cannot be empty", Toast.LENGTH_LONG).show();
+        } else {
+            editor.putString(SEC_TOKEN, tokenText.getText().toString());
+            editor.apply();
+
+            Toast.makeText(this,"Token was Saved", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void loadData() {
+        SharedPreferences sp = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        String tokenString = sp.getString(SEC_TOKEN, "Security Access Token Required");
+
+        EditText text1 = findViewById(R.id.editToken);
+
+        text1.setHint("Security Access Token Required");
+        text1.setText(tokenString);
     }
 
     /** This method will run when DUES button is clicked
@@ -67,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     void resultsResponse(List<String> due_assignments) {
         Log.d("MainActivity", "Results: " + due_assignments);
         ArrayAdapter<String> ListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, due_assignments);
-        ListView listview = (ListView) findViewById(R.id.list);
+        ListView listview = findViewById(R.id.list);
         listview.setAdapter(ListAdapter);
     }
 }
