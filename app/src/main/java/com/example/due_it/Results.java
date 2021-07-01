@@ -1,10 +1,14 @@
 package com.example.due_it;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import com.google.gson.Gson;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +18,8 @@ import java.util.List;
 class Results extends AppCompatActivity implements Runnable {
     private static SharedPreferences sp;
     private MainActivity activity;
+    public long datlon;
+    public String datstr;
     public String mycourses;
     public String myassignments;
     public String courses;
@@ -27,14 +33,17 @@ class Results extends AppCompatActivity implements Runnable {
     public String asNAME;
     public String asATTEMPTS;
     public List asSUBTYPE;
-    public String GSI = "107060000000000001";
-    public String pp = "40";
     public String es = "?enrollment_state=active";
-    public String op_bu_up = "upcoming";
-    public String op_bu_fu = "future";
-    public String op_bu_pa = "past";
+    public String pp = "?per_page=40";
+    public String op_bu_fu = "&bucket=future";
+    public String op_bu_ov = "&bucket=overdue";
+    public String op_bu_up = "&bucket=upcoming";
+    public String op_bu_pa = "&bucket=past";
     public String op_bucket;
-    public String token = "";
+    public String minsec = ":59:59";
+    public String endsem = "2021-07-22T05:59:59Z";
+    public String or_by = "&order_by=due_at";
+    public String token = "10706~exjYOEw7sPVbrjl9wzAZ4BBA6qbQtrdArKTs7BYPulZn5TwAn8ZCRQ2UQtMsoywW";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,46 +69,55 @@ class Results extends AppCompatActivity implements Runnable {
      *  list of courses and assignments required by the user. That list must be sorted by         *
      *  date and course, before the runOnUiThread will return the list to be shown on the screen. *
      */
-
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void run() {
-        token = "";// Here has to be recovered the token from SharadPreferences
-        op_bucket = op_bu_up;
+        op_bucket = op_bu_fu;
         courses = HTTPHelper.readHTTP("https://canvas.instructure.com/api/v1/courses"
                 + es, "Bearer " + token);
+        mycourses = "{\"masterCourses\":"+courses+"}";
         Gson gson_c = new Gson();
-        final Courses cc = gson_c.fromJson(courses, Courses.class);
-        List<String> due_assignments = new ArrayList<>();
+        final Courses cc = gson_c.fromJson(mycourses, Courses.class);
+        List<String> due_assignments = new ArrayList<String>();
         String As_Line;
         for (CourseItem item_c : cc.getCourseItems()) {
+            String gsi = item_c.getCo_Grading_standard_id();
             if (item_c.getCo_Grading_standard_id() != null) {
                 courseID = item_c.getCo_id();
-                courseCODE = item_c.getCo_Code();
                 courseNAME = item_c.getCo_Name();
+                courseCODE = item_c.getCo_Code();
                 assignments = HTTPHelper.readHTTP("https://canvas.instructure.com/api/v1/courses/"
-                        + courseID + "/assignments?per_page="+pp+"&bucket="+op_bucket,
-                        "Bearer " + token);
+                        + courseID + "/assignments"+ pp + op_bucket,"Bearer " + token);
+                myassignments = "{\"masterAssignments\":"+assignments+"}";
                 Gson gson_a = new Gson();
-                final Assignments as = gson_a.fromJson(assignments, Assignments.class);
-                Log.d("MainActivity", "Assignments: " + as);
+                final Assignments as = gson_a.fromJson(myassignments, Assignments.class);
                 for (AssignmentItem item_a : as.getAssignmentItems()) {
                     asDueDATE = item_a.getAs_due_at();
+                    if (asDueDATE == null) {
+                        asDueDATE = endsem;
+                    }
                     asNAME = item_a.getAs_name();
                     asID = item_a.getAs_id();
                     asPOINTS = item_a.getAs_points_possible();
                     asSUBTYPE = item_a.getAs_submission_types();
                     asATTEMPTS = item_a.getAs_allowed_attempts();
+                    datlon = (Instant.parse(asDueDATE).toEpochMilli())-21600;
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH");
+                    datstr = df.format(datlon)+minsec;
+                    asDueDATE = datstr;
                     As_Line = "\nDate : " + asDueDATE + " Course : " + courseCODE
-                            + "\nAssignment : " + asNAME + " Points: " + asPOINTS
-                            + "\nType : " + asSUBTYPE;
+                            + " Assignment : " + asNAME + " Points: " + asPOINTS
+                            + " Type : " + asSUBTYPE;
                     due_assignments.add(As_Line);
-                    Log.d("MainActivity", "As_Line: " + As_Line);
+                    Log.d("MainActivity", "due_assignments: " + due_assignments);
                 }
             }
         }
     }
 }
 /** At this point we should have the complete list of due assignments
-  * TODO still WE NEED TO SORT THE OBTAINED LIST BY DATE AND COURSE BEFORE DISPLAYING IT
-        activity.runOnUiThread(() -> activity.resultsResponse(due_assignments));
+ * TODO still WE NEED TO SORT THE OBTAINED LIST BY DATE AND COURSE
  */
+//        activity.runOnUiThread(() -> {
+//            activity.resultsResponse(due_assignments);
+//        });
