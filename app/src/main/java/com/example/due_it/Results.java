@@ -43,7 +43,7 @@ class Results extends AppCompatActivity implements Runnable {
     public String minsec = ":59:59";
     public String endsem = "2021-07-22T05:59:59Z";
     public String or_by = "&order_by=due_at";
-    public String token = "10706~exjYOEw7sPVbrjl9wzAZ4BBA6qbQtrdArKTs7BYPulZn5TwAn8ZCRQ2UQtMsoywW";
+    public String token = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
