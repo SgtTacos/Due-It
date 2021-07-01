@@ -71,7 +71,8 @@ class Results extends AppCompatActivity implements Runnable {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void run() {
-        op_bucket = op_bu_fu;
+        token = ""; // Here is needed the token transfer from SharedPreferences
+        op_bucket = op_bu_fu; //Option of results, could be defined by buttons variety
         courses = HTTPHelper.readHTTP("https://canvas.instructure.com/api/v1/courses"
                 + es, "Bearer " + token);
         mycourses = "{\"masterCourses\":"+courses+"}";
@@ -92,8 +93,8 @@ class Results extends AppCompatActivity implements Runnable {
                 final Assignments as = gson_a.fromJson(myassignments, Assignments.class);
                 for (AssignmentItem item_a : as.getAssignmentItems()) {
                     asDueDATE = item_a.getAs_due_at();
-                    if (asDueDATE == null) {
-                        asDueDATE = endsem;
+                    if (asDueDATE == null) {  // Null dates were found that made the app crash
+                        asDueDATE = endsem;  // A constant date is moved to null dates
                     }
                     asNAME = item_a.getAs_name();
                     asID = item_a.getAs_id();
@@ -102,7 +103,7 @@ class Results extends AppCompatActivity implements Runnable {
                     asATTEMPTS = item_a.getAs_allowed_attempts();
                     datlon = (Instant.parse(asDueDATE).toEpochMilli())-21600;
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH");
-                    datstr = df.format(datlon)+minsec;
+                    datstr = df.format(datlon)+minsec; // seconds difference after conversion
                     asDueDATE = datstr;
                     As_Line = "\nDate : " + asDueDATE + " Course : " + courseCODE
                             + " Assignment : " + asNAME + " Points: " + asPOINTS
@@ -116,6 +117,7 @@ class Results extends AppCompatActivity implements Runnable {
 }
 /** At this point we should have the complete list of due assignments
  * TODO still WE NEED TO SORT THE OBTAINED LIST BY DATE AND COURSE
+ * API option "ordered_by:due_at" crashes due to null dates
  */
 //        activity.runOnUiThread(() -> {
 //            activity.resultsResponse(due_assignments);
