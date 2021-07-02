@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         loadData();
     }
 
@@ -39,19 +38,20 @@ public class MainActivity extends AppCompatActivity {
     public void saveToken(View view) {
         SharedPreferences sp = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-
         EditText tokenText = findViewById(R.id.editToken);
-
         if (tokenText.getText().toString().matches("")) {
             Toast.makeText(this,"Text field cannot be empty", Toast.LENGTH_LONG).show();
         } else {
             editor.putString(SEC_TOKEN, tokenText.getText().toString());
             editor.apply();
-
             Toast.makeText(this,"Token was Saved", Toast.LENGTH_LONG).show();
         }
     }
 
+    /** This method......
+     *
+     *
+     */
     public void loadData() {
         SharedPreferences sp = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         String tokenString = sp.getString(SEC_TOKEN, "Security Access Token Required");

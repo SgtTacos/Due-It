@@ -33,8 +33,8 @@ class Results extends AppCompatActivity implements Runnable {
     public String asNAME;
     public String asATTEMPTS;
     public List asSUBTYPE;
-    public String es = "?enrollment_state=active";
     public String pp = "?per_page=40";
+    public String es = "&enrollment_state=active";
     public String op_bu_fu = "&bucket=future";
     public String op_bu_ov = "&bucket=overdue";
     public String op_bu_up = "&bucket=upcoming";
@@ -71,7 +71,7 @@ class Results extends AppCompatActivity implements Runnable {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void run() {
-        token = ""; // Here is needed the token transfer from SharedPreferences
+        token = ""; // Here is needed the token load from SharedPreferences
         op_bucket = op_bu_fu; //Option of results, could be defined by buttons variety
         courses = HTTPHelper.readHTTP("https://canvas.instructure.com/api/v1/courses" + pp
                 + es, "Bearer " + token);
@@ -109,8 +109,8 @@ class Results extends AppCompatActivity implements Runnable {
                             + " Assignment : " + asNAME + " Points: " + asPOINTS
                             + " Type : " + asSUBTYPE;
                     due_assignments.add(As_Line);
-                    Log.d("MainActivity", "due_assignments: " + due_assignments);
                 }
+                Log.d("MainActivity", "due_assignments: " + due_assignments);
             }
         }
     }
