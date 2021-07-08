@@ -36,7 +36,7 @@ class Results extends AppCompatActivity implements Runnable {
     public String asNAME;
     public String asATTEMPTS;
     public List asSUBTYPE;
-    public String es = "?enrollment_state=active";
+    public String es = "&enrollment_state=active";
     public String pp = "?per_page=40";
     public String op_bu_fu = "&bucket=future";
     public String op_bu_ov = "&bucket=overdue";
