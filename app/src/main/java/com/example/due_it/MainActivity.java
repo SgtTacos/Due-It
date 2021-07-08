@@ -1,6 +1,8 @@
 package com.example.due_it;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String SEC_TOKEN = "secToken";
     public static final String APP_THEME = "appTheme";
+    private MainActivity activity;
 
     /** Loading the app, it will retrieve a security token from SharedPreferences
      *  If a Token is present, it will be shown on screen and copied to text
@@ -69,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void duesResults(View view) {
         ListView list = findViewById(R.id.list);
-        Results current = new Results(this);
+        Results current = new Results(this, activity);
         Thread localThread = new Thread(current);
         localThread.start();
     }

@@ -47,8 +47,9 @@ class Results extends AppCompatActivity implements Runnable {
     public String endsem = "2021-07-22T05:59:59Z";
     public String token = "";
 
-    public Results(Context context) {
+    public Results(Context context, MainActivity activity) {
         this.context = context;
+        this.activity = activity;
     }
 
     @Override
@@ -119,15 +120,15 @@ class Results extends AppCompatActivity implements Runnable {
                             + " Type : " + asSUBTYPE;
                     due_assignments.add(As_Line);
                 }
-                Log.d("MainActivity", "due_assignments: " + due_assignments);
             }
+            Log.d("MainActivity", "due_assignments: " + due_assignments);
         }
+        activity.runOnUiThread(() -> {
+            activity.resultsResponse(due_assignments);
+        });
     }
 }
 /** At this point we should have the complete list of due assignments
  * TODO still WE NEED TO SORT THE OBTAINED LIST BY DATE AND COURSE
  * API option "ordered_by:due_at" crashes due to null dates
  */
-//        activity.runOnUiThread(() -> {
-//            activity.resultsResponse(due_assignments);
-//        });
