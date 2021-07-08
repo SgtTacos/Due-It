@@ -2,6 +2,6 @@
     <string name="app_name">Due-It</string>
     <string name="title">DUE-IT</string>
     <string name="hint">Enter Security Token</string>
-    <string name="button1">SECURITY</string>
-    <string name="button2">DUES</string>
+    <string name="button1">Save Token</string>
+    <string name="button2">To-Do List</string>
 </resources>
