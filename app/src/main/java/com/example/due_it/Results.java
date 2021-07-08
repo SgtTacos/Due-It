@@ -2,21 +2,26 @@ package com.example.due_it;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import com.google.gson.Gson;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.prefs.PreferenceChangeEvent;
 
 /** This class is in charge of doing what is necessary to
  * produce the results expected by the user:
  */
 class Results extends AppCompatActivity implements Runnable {
     private static SharedPreferences sp;
+    private Context context;
     private MainActivity activity;
     public long datlon;
     public String datstr;
@@ -33,8 +38,8 @@ class Results extends AppCompatActivity implements Runnable {
     public String asNAME;
     public String asATTEMPTS;
     public List asSUBTYPE;
+    public String es = "?enrollment_state=active";
     public String pp = "?per_page=40";
-    public String es = "&enrollment_state=active";
     public String op_bu_fu = "&bucket=future";
     public String op_bu_ov = "&bucket=overdue";
     public String op_bu_up = "&bucket=upcoming";
@@ -43,6 +48,10 @@ class Results extends AppCompatActivity implements Runnable {
     public String minsec = ":59:59";
     public String endsem = "2021-07-22T05:59:59Z";
     public String token = "";
+
+    public Results(Context context) {
+        this.context = context;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +80,9 @@ class Results extends AppCompatActivity implements Runnable {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void run() {
-        token = ""; // Here is needed the token load from SharedPreferences
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        token = sharedPreferences.getString("secToken", ""); // Here is needed the token transfer from SharedPreferences
+
         op_bucket = op_bu_fu; //Option of results, could be defined by buttons variety
         courses = HTTPHelper.readHTTP("https://canvas.instructure.com/api/v1/courses" + pp
                 + es, "Bearer " + token);

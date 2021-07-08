@@ -3,6 +3,7 @@ package com.example.due_it;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
      *  It shows a Toast message indicating Token was saved
      */
     public void saveToken(View view) {
-        SharedPreferences sp = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sp.edit();
         EditText tokenText = findViewById(R.id.editToken);
         if (tokenText.getText().toString().matches("")) {
@@ -53,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
      *
      */
     public void loadData() {
-        SharedPreferences sp = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        String tokenString = sp.getString(SEC_TOKEN, "Security Access Token Required");
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        String tokenString = sp.getString(SEC_TOKEN, "");
 
         EditText text1 = findViewById(R.id.editToken);
 
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void duesResults(View view) {
         ListView list = findViewById(R.id.list);
-        Results current = new Results();
+        Results current = new Results(this);
         Thread localThread = new Thread(current);
         localThread.start();
     }
