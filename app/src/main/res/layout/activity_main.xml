@@ -12,8 +12,10 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/hyrummanwaring1" />
 
     <EditText
@@ -22,7 +24,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="360dp"
+        android:layout_marginTop="340dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:ems="10"
@@ -37,7 +39,7 @@
         android:id="@+id/button1"
         android:layout_width="240dp"
         android:layout_height="60dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@color/red"
         android:gravity="center_vertical|center_horizontal"
         android:onClick="saveToken"
@@ -46,6 +48,7 @@
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editToken" />
 
@@ -72,9 +75,9 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="44dp"
         android:fontFamily="@font/bigshot_one"
         android:lineSpacingExtra="8sp"
         android:text="Welcome"
@@ -89,13 +92,13 @@
     <TextView
         android:id="@+id/textView2"
         android:layout_width="51dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="39dp"
         android:text="To"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="@color/gold"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -103,8 +106,8 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
-        android:layout_marginRight="60dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginRight="56dp"
         android:layout_marginBottom="73dp"
         android:fontFamily="@font/bigshot_one"
         android:lineSpacingExtra="8sp"
