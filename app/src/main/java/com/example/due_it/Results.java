@@ -2,7 +2,6 @@ package com.example.due_it;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -14,7 +13,6 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.prefs.PreferenceChangeEvent;
 
 /** This class is in charge of doing what is necessary to
  * produce the results expected by the user:

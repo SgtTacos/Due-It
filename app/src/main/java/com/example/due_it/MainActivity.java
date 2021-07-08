@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /** This method......
-     *
+     *  Tsosie, you need to add comments for this method
      *
      */
     public void loadData() {
