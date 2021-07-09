@@ -54,6 +54,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button5.setOnClickListener(this);
     }
 
+    /**
+     * Switch to select the Button listener option
+     * @param v
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.button2:
+                op_bucket=op_bu_ov;
+                this.duesResults();
+                break;
+            case R.id.button3:
+                op_bucket=op_bu_pa;
+                this.duesResults();
+                break;
+            case R.id.button4:
+                op_bucket=op_bu_fu;
+                this.duesResults();
+                break;
+            case R.id.button5:
+                op_bucket=op_bu_up;
+                this.duesResults();
+                break;
+
+        }
+    }
+
     /** This method is invoked by securityToken and it is in charge of
      *  saving the Token in SharedPreferences for future uses
      *  It shows a Toast message indicating Token was saved
@@ -83,33 +110,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         text1.setHint("Security Access Token Required");
         text1.setText(tokenString);
-    }
-
-    /**
-     * Switch to select the Button listener option
-     * @param v
-     */
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.button2:
-                op_bucket=op_bu_ov;
-                this.duesResults();
-                break;
-            case R.id.button3:
-                op_bucket=op_bu_pa;
-                this.duesResults();
-                break;
-            case R.id.button4:
-                op_bucket=op_bu_fu;
-                this.duesResults();
-                break;
-            case R.id.button5:
-                op_bucket=op_bu_up;
-                this.duesResults();
-                break;
-
-        }
     }
 
     /** This method will run when DUES button is clicked
