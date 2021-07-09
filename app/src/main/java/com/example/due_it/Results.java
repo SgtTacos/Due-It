@@ -21,10 +21,10 @@ class Results extends AppCompatActivity implements Runnable {
     private static SharedPreferences sp;
     private Context context;
     private MainActivity activity;
-    public long datlon;
-    public String datstr;
-    public String mycourses;
-    public String myassignments;
+    public long dat_lon;
+    public String dat_str;
+    public String my_courses;
+    public String my_assignments;
     public String courses;
     public String assignments;
     public String courseID;
@@ -80,9 +80,9 @@ class Results extends AppCompatActivity implements Runnable {
         token = sharedPreferences.getString("secToken", ""); // Here is needed the token transfer from SharedPreferences
         courses = HTTPHelper.readHTTP("https://canvas.instructure.com/api/v1/courses" + pp
                 + es, "Bearer " + token);
-        mycourses = "{\"masterCourses\":"+courses+"}";
+        my_courses = "{\"masterCourses\":"+courses+"}";
         Gson gson_c = new Gson();
-        final Courses cc = gson_c.fromJson(mycourses, Courses.class);
+        final Courses cc = gson_c.fromJson(my_courses, Courses.class);
         List<String> due_assignments = new ArrayList<String>();
         String As_Line;
         for (CourseItem item_c : cc.getCourseItems()) {
@@ -94,9 +94,9 @@ class Results extends AppCompatActivity implements Runnable {
                 Log.d("MainActivity", "opt_buck: " + opt_buck);
                 assignments = HTTPHelper.readHTTP("https://canvas.instructure.com/api/v1/courses/"
                         + courseID + "/assignments"+ pp + opt_buck,"Bearer " + token);
-                myassignments = "{\"masterAssignments\":"+assignments+"}";
+                my_assignments = "{\"masterAssignments\":"+assignments+"}";
                 Gson gson_a = new Gson();
-                final Assignments as = gson_a.fromJson(myassignments, Assignments.class);
+                final Assignments as = gson_a.fromJson(my_assignments, Assignments.class);
                 for (AssignmentItem item_a : as.getAssignmentItems()) {
                     asDueDATE = item_a.getAs_due_at();
                     if (asDueDATE == null) {  // Null dates were found that made the app crash
@@ -107,10 +107,10 @@ class Results extends AppCompatActivity implements Runnable {
                     asPOINTS = item_a.getAs_points_possible();
                     asSUBTYPE = item_a.getAs_submission_types();
                     asATTEMPTS = item_a.getAs_allowed_attempts();
-                    datlon = (Instant.parse(asDueDATE).toEpochMilli())-21600;
+                    dat_lon = (Instant.parse(asDueDATE).toEpochMilli())-21600;
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH");
-                    datstr = df.format(datlon)+ min_sec; // seconds difference after conversion
-                    asDueDATE = datstr;
+                    dat_str = df.format(dat_lon)+ min_sec; // seconds difference after conversion
+                    asDueDATE = dat_str;
                     As_Line = "\nDate : " + asDueDATE + " Course : " + courseCODE
                             + " Assignment : " + asNAME + " Points: " + asPOINTS
                             + " Type : " + asSUBTYPE;
