@@ -37,19 +37,22 @@ class Results extends AppCompatActivity implements Runnable {
     public String asATTEMPTS;
     public List asSUBTYPE;
     public String es = "&enrollment_state=active";
-    public String pp = "?per_page=40";
-    public String op_bu_fu = "&bucket=future";
+    public String pp = "?per_page=60";
     public String op_bu_ov = "&bucket=overdue";
-    public String op_bu_up = "&bucket=upcoming";
     public String op_bu_pa = "&bucket=past";
-    public String op_bucket;
+    public String op_bu_fu = "&bucket=future";
+    public String op_bu_up = "&bucket=upcoming";
+    public String opt_buck;
     public String minsec = ":59:59";
     public String endsem = "2021-07-22T05:59:59Z";
     public String token = "";
 
-    public Results(Context context, MainActivity activity) {
+    public Results(MainActivity context, String op_bucket) {
         this.context = context;
         this.activity = activity;
+        opt_buck = op_bucket;
+        Log.d("MainActivity", "op_bucket: " + op_bucket);
+
     }
 
     @Override
@@ -82,7 +85,7 @@ class Results extends AppCompatActivity implements Runnable {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         token = sharedPreferences.getString("secToken", ""); // Here is needed the token transfer from SharedPreferences
 
-        op_bucket = op_bu_fu; //Option of results, could be defined by buttons variety
+//        op_bucket = op_bu_fu; //Option of results, could be defined by buttons variety
         courses = HTTPHelper.readHTTP("https://canvas.instructure.com/api/v1/courses" + pp
                 + es, "Bearer " + token);
         mycourses = "{\"masterCourses\":"+courses+"}";
@@ -96,8 +99,9 @@ class Results extends AppCompatActivity implements Runnable {
                 courseID = item_c.getCo_id();
                 courseNAME = item_c.getCo_Name();
                 courseCODE = item_c.getCo_Code();
+                Log.d("MainActivity", "opt_buck: " + opt_buck);
                 assignments = HTTPHelper.readHTTP("https://canvas.instructure.com/api/v1/courses/"
-                        + courseID + "/assignments"+ pp + op_bucket,"Bearer " + token);
+                        + courseID + "/assignments"+ pp + opt_buck,"Bearer " + token);
                 myassignments = "{\"masterAssignments\":"+assignments+"}";
                 Gson gson_a = new Gson();
                 final Assignments as = gson_a.fromJson(myassignments, Assignments.class);

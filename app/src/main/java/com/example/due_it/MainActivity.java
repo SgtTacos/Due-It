@@ -2,13 +2,13 @@ package com.example.due_it;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -17,11 +17,16 @@ import java.util.List;
 /** This is the Main Activity Class.
  * This class will command the app work.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String SEC_TOKEN = "secToken";
     public static final String APP_THEME = "appTheme";
     private MainActivity activity;
+    public String op_bucket;
+    public String op_bu_ov = "&bucket=overdue";
+    public String op_bu_pa = "&bucket=past";
+    public String op_bu_fu = "&bucket=future";
+    public String op_bu_up = "&bucket=upcoming";
 
     /** Loading the app, it will retrieve a security token from SharedPreferences
      *  If a Token is present, it will be shown on screen and copied to text
@@ -33,6 +38,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         loadData();
+
+        Button button2 = findViewById(R.id.button2);
+        Button button3 = findViewById(R.id.button3);
+        Button button4 = findViewById(R.id.button4);
+        Button button5 = findViewById(R.id.button5);
+
+        button2.setOnClickListener(this);
+        button3.setOnClickListener(this);
+        button4.setOnClickListener(this);
+        button5.setOnClickListener(this);
     }
 
     /** This method is invoked by securityToken and it is in charge of
@@ -66,13 +81,36 @@ public class MainActivity extends AppCompatActivity {
         text1.setText(tokenString);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.button2:
+                op_bucket=op_bu_ov;
+                this.duesResults();
+                break;
+            case R.id.button3:
+                op_bucket=op_bu_pa;
+                this.duesResults();
+                break;
+            case R.id.button4:
+                op_bucket=op_bu_fu;
+                this.duesResults();
+                break;
+            case R.id.button5:
+                op_bucket=op_bu_up;
+                this.duesResults();
+                break;
+
+        }
+    }
+
     /** This method will run when DUES button is clicked
      *  It is in charge of requesting the dues results
      *  and initiating it in a new thread
      */
-    public void duesResults(View view) {
+    public void duesResults() {
         ListView list = findViewById(R.id.list);
-        Results current = new Results(this, activity);
+        Results current = new Results(this, op_bucket);
         Thread localThread = new Thread(current);
         localThread.start();
     }
@@ -86,4 +124,5 @@ public class MainActivity extends AppCompatActivity {
         ListView listview = findViewById(R.id.list);
         listview.setAdapter(ListAdapter);
     }
+
 }
