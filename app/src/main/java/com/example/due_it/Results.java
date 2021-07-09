@@ -2,6 +2,9 @@ package com.example.due_it;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -20,7 +23,7 @@ import java.util.List;
 /** This class is in charge of doing what is necessary to
  * produce the results expected by the user:
  */
-class Results extends AppCompatActivity implements Runnable {
+public class Results extends AppCompatActivity implements Runnable {
     private static SharedPreferences sp;
     private Context context;
     private MainActivity activity;
@@ -46,17 +49,31 @@ class Results extends AppCompatActivity implements Runnable {
     public String min_sec = ":59:59";
     public String end_sem = "2021-07-22T05:59:59Z";
     public String token = "";
+    private MyAdapter adapter;
 
-    public Results(MainActivity activity, MainActivity context, String op_bucket) {
+    /** public Results(MainActivity activity, MainActivity context, String op_bucket) {
         this.context = context;
         this.activity = activity;
         opt_buck = op_bucket;
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.results);
+        List<String> courses = new ArrayList<>();
+        courses.add("CS 246");
+        courses.add("CS E111");
+        courses.add("WDD 130");
+        courses.add("CS 246");
+        courses.add("CS 244");
+        courses.add("CS 236");
+        RecyclerView rv = findViewById(R.id.results);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new MyAdapter(this, courses);
+        rv.setAdapter(adapter);
+       Thread thread = new Thread(this);
+       thread.start();
     }
     /** This method is in charge of the app processes, making first the call for the courses that
      *  correspond to the token provided by the user.
@@ -77,11 +94,12 @@ class Results extends AppCompatActivity implements Runnable {
      *  list of courses and assignments required by the user. That list must be sorted by         *
      *  date and course, before the runOnUiThread will return the list to be shown on the screen. *
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
+   // @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void run() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences sharedPreferences = this.getSharedPreferences("dues", Context.MODE_PRIVATE );
         token = sharedPreferences.getString("secToken", ""); // Here is needed the token transfer from SharedPreferences
+
         courses = HTTPHelper.readHTTP("https://canvas.instructure.com/api/v1/courses" + pp
                 + es, "Bearer " + token);
         my_courses = "{\"masterCourses\":"+courses+"}";
@@ -111,7 +129,8 @@ class Results extends AppCompatActivity implements Runnable {
                     asPOINTS = item_a.getAs_points_possible();
                     asSUBTYPE = item_a.getAs_submission_types();
                     asATTEMPTS = item_a.getAs_allowed_attempts();
-                    dat_lon = (Instant.parse(asDueDATE).toEpochMilli())-21600;
+                    //dat_lon = (Instant.parse(asDueDATE).toEpochMilli())-21600;
+                    dat_lon =0;
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH");
                     dat_str = df.format(dat_lon)+ min_sec; // seconds difference after conversion
                     asDueDATE = dat_str;
@@ -128,8 +147,16 @@ class Results extends AppCompatActivity implements Runnable {
          * TODO WE NEED TO SORT THE OBTAINED LIST BY DATE AND COURSE
          */
         Log.d("MainActivity", "Results: " + due_assignments);
-        ArrayAdapter<String> ListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, due_assignments);
+        adapter.setData(due_assignments);
+       /** ArrayAdapter<String> ListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, due_assignments);
         ListView listview = findViewById(R.id.list);
-        listview.setAdapter(ListAdapter);
+        listview.setAdapter(ListAdapter);*/
+        /**RecyclerView rv = findViewById(R.id.results);
+        /**rv.setLayoutManager(new LinearLayoutManager(this));
+        MyAdapter adapter = new MyAdapter(this, due_assignments);
+        rv.setAdapter(adapter);*/
+
     }
-}
+
+    }
+

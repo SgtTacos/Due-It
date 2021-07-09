@@ -2,6 +2,8 @@ package com.example.due_it;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -89,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * It shows a Toast message indicating Token was saved
      */
     public void saveToken(View view) {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences sp = this.getSharedPreferences("dues", Context.MODE_PRIVATE );
         SharedPreferences.Editor editor = sp.edit();
         EditText tokenText = findViewById(R.id.editToken);
         if (tokenText.getText().toString().matches("")) {
@@ -121,10 +123,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * and initiating it in a new thread
      */
     public void duesResults() {
-        ListView list = findViewById(R.id.list);
+       /** ListView list = findViewById(R.id.list);
         Results current = new Results(this, this, op_bucket);
         Thread localThread = new Thread(current);
-        localThread.start();
+        localThread.start();*/
+        Intent intent = new Intent(this, Results.class);
+        startActivity(intent);
     }
 }
 
