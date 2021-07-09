@@ -8,6 +8,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
 import com.google.gson.Gson;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -38,12 +41,13 @@ class Results extends AppCompatActivity implements Runnable {
     public List asSUBTYPE;
     public String es = "&enrollment_state=active";
     public String pp = "?per_page=60";
+    public String ob = "&order_by=due_at";
     public String opt_buck;
     public String min_sec = ":59:59";
     public String end_sem = "2021-07-22T05:59:59Z";
     public String token = "";
 
-    public Results(MainActivity context, String op_bucket) {
+    public Results(MainActivity activity, MainActivity context, String op_bucket) {
         this.context = context;
         this.activity = activity;
         opt_buck = op_bucket;
@@ -119,13 +123,13 @@ class Results extends AppCompatActivity implements Runnable {
             }
             Log.d("MainActivity", "due_assignments: " + due_assignments);
         }
-/** At this point we should have the complete list of due assignments
- * TODO Since Canvas API "ordered_by" option crashes due to null due_at dates,
- * TODO still WE NEED TO SORT THE OBTAINED LIST BY DATE AND COURSE
- *
- */
-        activity.runOnUiThread(() -> {
-            activity.resultsResponse(due_assignments);
-        });
+        /** At this point we have the complete list of requested due assignments
+         * TODO Unless we fix Canvas API "ordered_by" option crashes due to null due_at dates,
+         * TODO WE NEED TO SORT THE OBTAINED LIST BY DATE AND COURSE
+         */
+        Log.d("MainActivity", "Results: " + due_assignments);
+        ArrayAdapter<String> ListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, due_assignments);
+        ListView listview = findViewById(R.id.list);
+        listview.setAdapter(ListAdapter);
     }
 }

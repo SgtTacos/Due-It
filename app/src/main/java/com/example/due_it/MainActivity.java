@@ -17,7 +17,7 @@ import java.util.List;
 /** This is the Main Activity Class.
  * This class will command the app work.
  */
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String SEC_TOKEN = "secToken";
     public static final String APP_THEME = "appTheme";
@@ -28,10 +28,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public String op_bu_fu = "&bucket=future";
     public String op_bu_up = "&bucket=upcoming";
 
-    /** Loading the app, it will retrieve a security token from SharedPreferences
-     *  If a Token is present, it will be shown on screen and copied to text
-     *  If there is no token in SharedPreferences
-     *  a hint requesting Token will be shown
+    /**
+     * Loading the app, it will retrieve a security token from SharedPreferences
+     * If a Token is present, it will be shown on screen and copied to text
+     * If there is no token in SharedPreferences
+     * a hint requesting Token will be shown
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,51 +57,53 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * Switch to select the Button listener option
+     *
      * @param v
      */
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.button2:
-                op_bucket=op_bu_ov;
+                op_bucket = op_bu_ov;
                 this.duesResults();
                 break;
             case R.id.button3:
-                op_bucket=op_bu_pa;
+                op_bucket = op_bu_pa;
                 this.duesResults();
                 break;
             case R.id.button4:
-                op_bucket=op_bu_fu;
+                op_bucket = op_bu_fu;
                 this.duesResults();
                 break;
             case R.id.button5:
-                op_bucket=op_bu_up;
+                op_bucket = op_bu_up;
                 this.duesResults();
                 break;
 
         }
     }
 
-    /** This method is invoked by securityToken and it is in charge of
-     *  saving the Token in SharedPreferences for future uses
-     *  It shows a Toast message indicating Token was saved
+    /**
+     * This method is invoked by securityToken and it is in charge of
+     * saving the Token in SharedPreferences for future uses
+     * It shows a Toast message indicating Token was saved
      */
     public void saveToken(View view) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sp.edit();
         EditText tokenText = findViewById(R.id.editToken);
         if (tokenText.getText().toString().matches("")) {
-            Toast.makeText(this,"Text field cannot be empty", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Text field cannot be empty", Toast.LENGTH_LONG).show();
         } else {
             editor.putString(SEC_TOKEN, tokenText.getText().toString());
             editor.apply();
-            Toast.makeText(this,"Token was Saved", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Token was Saved", Toast.LENGTH_LONG).show();
         }
     }
 
-    /** This method......
-     *  Tsosie, you need to add comments for this method
-     *
+    /**
+     * This method......
+     * Tsosie, you need to add comments for this method
      */
     public void loadData() {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
@@ -112,25 +115,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         text1.setText(tokenString);
     }
 
-    /** This method will run when DUES button is clicked
-     *  It is in charge of requesting the dues results
-     *  and initiating it in a new thread
+    /**
+     * This method will run when DUES button is clicked
+     * It is in charge of requesting the dues results
+     * and initiating it in a new thread
      */
     public void duesResults() {
         ListView list = findViewById(R.id.list);
-        Results current = new Results(this, op_bucket);
+        Results current = new Results(this, this, op_bucket);
         Thread localThread = new Thread(current);
         localThread.start();
     }
+}
 
     /** This method exists to receive the results response,
      *  translate it to the list and display the list
      */
-    void resultsResponse(List<String> due_assignments) {
-        Log.d("MainActivity", "Results: " + due_assignments);
-        ArrayAdapter<String> ListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, due_assignments);
-        ListView listview = this.<ListView>findViewById(R.id.list);
-        listview.setAdapter(ListAdapter);
-    }
-
-}
+//  void resultsResponse(List<String> due_assignments) {
+//
+//  }
+//}
