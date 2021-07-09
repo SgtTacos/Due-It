@@ -38,21 +38,15 @@ class Results extends AppCompatActivity implements Runnable {
     public List asSUBTYPE;
     public String es = "&enrollment_state=active";
     public String pp = "?per_page=60";
-    public String op_bu_ov = "&bucket=overdue";
-    public String op_bu_pa = "&bucket=past";
-    public String op_bu_fu = "&bucket=future";
-    public String op_bu_up = "&bucket=upcoming";
     public String opt_buck;
-    public String minsec = ":59:59";
-    public String endsem = "2021-07-22T05:59:59Z";
+    public String min_sec = ":59:59";
+    public String end_sem = "2021-07-22T05:59:59Z";
     public String token = "";
 
     public Results(MainActivity context, String op_bucket) {
         this.context = context;
         this.activity = activity;
         opt_buck = op_bucket;
-        Log.d("MainActivity", "op_bucket: " + op_bucket);
-
     }
 
     @Override
@@ -84,8 +78,6 @@ class Results extends AppCompatActivity implements Runnable {
     public void run() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         token = sharedPreferences.getString("secToken", ""); // Here is needed the token transfer from SharedPreferences
-
-//        op_bucket = op_bu_fu; //Option of results, could be defined by buttons variety
         courses = HTTPHelper.readHTTP("https://canvas.instructure.com/api/v1/courses" + pp
                 + es, "Bearer " + token);
         mycourses = "{\"masterCourses\":"+courses+"}";
@@ -108,7 +100,7 @@ class Results extends AppCompatActivity implements Runnable {
                 for (AssignmentItem item_a : as.getAssignmentItems()) {
                     asDueDATE = item_a.getAs_due_at();
                     if (asDueDATE == null) {  // Null dates were found that made the app crash
-                        asDueDATE = endsem;  // A constant date is moved to null dates
+                        asDueDATE = end_sem;  // A constant date is moved to null dates
                     }
                     asNAME = item_a.getAs_name();
                     asID = item_a.getAs_id();
@@ -117,7 +109,7 @@ class Results extends AppCompatActivity implements Runnable {
                     asATTEMPTS = item_a.getAs_allowed_attempts();
                     datlon = (Instant.parse(asDueDATE).toEpochMilli())-21600;
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH");
-                    datstr = df.format(datlon)+minsec; // seconds difference after conversion
+                    datstr = df.format(datlon)+ min_sec; // seconds difference after conversion
                     asDueDATE = datstr;
                     As_Line = "\nDate : " + asDueDATE + " Course : " + courseCODE
                             + " Assignment : " + asNAME + " Points: " + asPOINTS

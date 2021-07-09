@@ -39,6 +39,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         loadData();
 
+        /**
+         * Definition of Buttons to allow selection of assignment options
+         * from "Overdue", "Past", "Future", "Upcoming"
+         */
         Button button2 = findViewById(R.id.button2);
         Button button3 = findViewById(R.id.button3);
         Button button4 = findViewById(R.id.button4);
@@ -81,6 +85,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         text1.setText(tokenString);
     }
 
+    /**
+     * Switch to select the Button listener option
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -121,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     void resultsResponse(List<String> due_assignments) {
         Log.d("MainActivity", "Results: " + due_assignments);
         ArrayAdapter<String> ListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, due_assignments);
-        ListView listview = findViewById(R.id.list);
+        ListView listview = this.<ListView>findViewById(R.id.list);
         listview.setAdapter(ListAdapter);
     }
 
