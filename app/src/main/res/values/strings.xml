@@ -4,4 +4,7 @@
     <string name="hint">Enter Security Token</string>
     <string name="button1">Save Token</string>
     <string name="button2">To-Do List</string>
+    <string name="welcome">Welcome</string>
+    <string name="to">To</string>
+    <string name="due_it">Due-It</string>
 </resources>

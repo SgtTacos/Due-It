@@ -123,12 +123,13 @@ class Results extends AppCompatActivity implements Runnable {
             }
             Log.d("MainActivity", "due_assignments: " + due_assignments);
         }
+/** At this point we should have the complete list of due assignments
+ * TODO Since Canvas API "ordered_by" option crashes due to null due_at dates,
+ * TODO still WE NEED TO SORT THE OBTAINED LIST BY DATE AND COURSE
+ *
+ */
         activity.runOnUiThread(() -> {
             activity.resultsResponse(due_assignments);
         });
     }
 }
-/** At this point we should have the complete list of due assignments
- * TODO still WE NEED TO SORT THE OBTAINED LIST BY DATE AND COURSE
- * API option "ordered_by:due_at" crashes due to null dates
- */
