@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String SEC_TOKEN = "secToken";
     public static final String APP_THEME = "appTheme";
     private MainActivity activity;
-    public String op_bucket;
+    public String op_bucket="&bucket=upcoming";
     public String op_bu_ov = "&bucket=overdue";
     public String op_bu_pa = "&bucket=past";
     public String op_bu_fu = "&bucket=future";

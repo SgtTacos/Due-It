@@ -11,8 +11,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import java.text.SimpleDateFormat;
@@ -45,7 +47,7 @@ public class Results extends AppCompatActivity implements Runnable {
     public String es = "&enrollment_state=active";
     public String pp = "?per_page=60";
     public String ob = "&order_by=due_at";
-    public String opt_buck;
+    public String opt_buck = "&bucket=future";
     public String min_sec = ":59:59";
     public String end_sem = "2021-07-22T05:59:59Z";
     public String token = "";
@@ -62,12 +64,7 @@ public class Results extends AppCompatActivity implements Runnable {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.results);
         List<String> courses = new ArrayList<>();
-        courses.add("CS 246");
-        courses.add("CS E111");
-        courses.add("WDD 130");
-        courses.add("CS 246");
-        courses.add("CS 244");
-        courses.add("CS 236");
+
         RecyclerView rv = findViewById(R.id.results);
         rv.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MyAdapter(this, courses);
@@ -97,6 +94,11 @@ public class Results extends AppCompatActivity implements Runnable {
    // @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void run() {
+        runOnUiThread(() -> {
+                    Toast.makeText(Results.this, "Started run", Toast.LENGTH_SHORT).show();
+                    findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+                });
+
         SharedPreferences sharedPreferences = this.getSharedPreferences("dues", Context.MODE_PRIVATE );
         token = sharedPreferences.getString("secToken", ""); // Here is needed the token transfer from SharedPreferences
 
@@ -107,11 +109,13 @@ public class Results extends AppCompatActivity implements Runnable {
         final Courses cc = gson_c.fromJson(my_courses, Courses.class);
         List<String> due_assignments = new ArrayList<String>();
         String As_Line;
+       // Log.e("Result", cc.getCourseItems().toString());
         for (CourseItem item_c : cc.getCourseItems()) {
             String gsi = item_c.getCo_Grading_standard_id();
             if (item_c.getCo_Grading_standard_id() != null) {
                 courseID = item_c.getCo_id();
                 courseNAME = item_c.getCo_Name();
+                Log.e("Result", courseNAME);
                 courseCODE = item_c.getCo_Code();
                 Log.d("MainActivity", "opt_buck: " + opt_buck);
                 assignments = HTTPHelper.readHTTP("https://canvas.instructure.com/api/v1/courses/"
@@ -125,6 +129,7 @@ public class Results extends AppCompatActivity implements Runnable {
                         asDueDATE = end_sem;  // A constant date is moved to null dates
                     }
                     asNAME = item_a.getAs_name();
+
                     asID = item_a.getAs_id();
                     asPOINTS = item_a.getAs_points_possible();
                     asSUBTYPE = item_a.getAs_submission_types();
@@ -147,8 +152,18 @@ public class Results extends AppCompatActivity implements Runnable {
          * TODO WE NEED TO SORT THE OBTAINED LIST BY DATE AND COURSE
          */
         Log.d("MainActivity", "Results: " + due_assignments);
-        adapter.setData(due_assignments);
-       /** ArrayAdapter<String> ListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, due_assignments);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(Results.this, "Updating adapter", Toast.LENGTH_LONG).show();
+                findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
+                adapter.setData(due_assignments);
+                adapter.notifyDataSetChanged(); //adapter.notifyDataSetChanged()
+            }
+        });
+
+        /**adapter.setData(due_assignments);
+        ArrayAdapter<String> ListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, due_assignments);
         ListView listview = findViewById(R.id.list);
         listview.setAdapter(ListAdapter);*/
         /**RecyclerView rv = findViewById(R.id.results);
