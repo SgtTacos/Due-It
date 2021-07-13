@@ -64,6 +64,7 @@ public class Results extends AppCompatActivity implements Runnable {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.results);
         List<String> courses = new ArrayList<>();
+        courses.add("Wait");
 
         RecyclerView rv = findViewById(R.id.results);
         rv.setLayoutManager(new LinearLayoutManager(this));
