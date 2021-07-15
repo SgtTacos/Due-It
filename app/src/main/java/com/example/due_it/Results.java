@@ -140,9 +140,11 @@ public class Results extends AppCompatActivity implements Runnable {
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH");
                     dat_str = df.format(dat_lon)+ min_sec; // seconds difference after conversion
                     asDueDATE = dat_str;
-                    As_Line = "\nDate : " + asDueDATE + " Course : " + courseCODE
-                            + " Assignment : " + asNAME + " Points: " + asPOINTS
-                            + " Type : " + asSUBTYPE;
+                    As_Line = //"Date : " + asDueDATE +
+                            "\n" + courseCODE
+                            + "\n" + asNAME
+                            + "\nPoints: " + asPOINTS;
+                           // + " Type : " + asSUBTYPE;
                     due_assignments.add(As_Line);
                 }
             }
