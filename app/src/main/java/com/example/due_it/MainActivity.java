@@ -20,11 +20,12 @@ import java.util.List;
  * This class will command the app work.
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String SHARED_PREFS = "dues";
     public static final String SEC_TOKEN = "secToken";
     public static final String APP_THEME = "appTheme";
+    public static final String OP_BUCKET = "opPref";
     private MainActivity activity;
-    public String op_bucket="&bucket=upcoming";
+    public String op_bucket;
     public String op_bu_ov = "&bucket=overdue";
     public String op_bu_pa = "&bucket=past";
     public String op_bu_fu = "&bucket=future";
@@ -67,22 +68,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.button2:
                 op_bucket = op_bu_ov;
-                this.duesResults();
                 break;
             case R.id.button3:
                 op_bucket = op_bu_pa;
-                this.duesResults();
                 break;
             case R.id.button4:
                 op_bucket = op_bu_fu;
-                this.duesResults();
                 break;
             case R.id.button5:
                 op_bucket = op_bu_up;
-                this.duesResults();
                 break;
-
         }
+        SharedPreferences sp = this.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString(OP_BUCKET, op_bucket);
+        editor.apply();
+
+        this.duesResults();
     }
 
     /**
@@ -91,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * It shows a Toast message indicating Token was saved
      */
     public void saveToken(View view) {
-        SharedPreferences sp = this.getSharedPreferences("dues", Context.MODE_PRIVATE );
+        SharedPreferences sp = this.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE );
         SharedPreferences.Editor editor = sp.edit();
         EditText tokenText = findViewById(R.id.editToken);
         if (tokenText.getText().toString().matches("")) {
@@ -108,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * Tsosie, you need to add comments for this method
      */
     public void loadData() {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences sp = this.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         String tokenString = sp.getString(SEC_TOKEN, "");
 
         EditText text1 = findViewById(R.id.editToken);

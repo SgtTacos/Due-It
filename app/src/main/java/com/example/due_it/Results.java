@@ -102,7 +102,7 @@ public class Results extends AppCompatActivity implements Runnable {
 
         SharedPreferences sharedPreferences = this.getSharedPreferences("dues", Context.MODE_PRIVATE );
         token = sharedPreferences.getString("secToken", ""); // Here is needed the token transfer from SharedPreferences
-
+        opt_buck = sharedPreferences.getString("opPref", "");
         courses = HTTPHelper.readHTTP("https://canvas.instructure.com/api/v1/courses" + pp
                 + es, "Bearer " + token);
         my_courses = "{\"masterCourses\":"+courses+"}";
@@ -135,8 +135,7 @@ public class Results extends AppCompatActivity implements Runnable {
                     asPOINTS = item_a.getAs_points_possible();
                     asSUBTYPE = item_a.getAs_submission_types();
                     asATTEMPTS = item_a.getAs_allowed_attempts();
-                    //dat_lon = (Instant.parse(asDueDATE).toEpochMilli())-21600;
-                    dat_lon =0;
+                    dat_lon = (Instant.parse(asDueDATE).toEpochMilli())-21600;
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH");
                     dat_str = df.format(dat_lon)+ min_sec; // seconds difference after conversion
                     asDueDATE = dat_str;
