@@ -106,9 +106,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * This method......
-     * Tsosie, you need to add comments for this method
-     */
+     * This method loads the data from the security token
+     * BYU-I I-learn*/
     public void loadData() {
         SharedPreferences sp = this.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         String tokenString = sp.getString(SEC_TOKEN, "");
@@ -125,19 +124,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * and initiating it in a new thread
      */
     public void duesResults() {
-       /** ListView list = findViewById(R.id.list);
-        Results current = new Results(this, this, op_bucket);
-        Thread localThread = new Thread(current);
-        localThread.start();*/
         Intent intent = new Intent(this, Results.class);
         startActivity(intent);
     }
 }
-
-    /** This method exists to receive the results response,
-     *  translate it to the list and display the list
-     */
-//  void resultsResponse(List<String> due_assignments) {
-//
-//  }
-//}

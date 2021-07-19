@@ -6,10 +6,6 @@ package com.example.due_it;
  * */
 
 public class Unescaper {
-    /** unescape_string()
-     * Class author: Tom Christiansen <tchrist@perl.com>
-     * Class Creation-Date: Sun Nov 28 12:55:24 MST 2010
-     */
 
     public final static
     String unescape_string(String oldstr) {

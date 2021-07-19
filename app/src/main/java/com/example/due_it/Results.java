@@ -53,18 +53,12 @@ public class Results extends AppCompatActivity implements Runnable {
     public String token = "";
     private MyAdapter adapter;
 
-    /** public Results(MainActivity activity, MainActivity context, String op_bucket) {
-        this.context = context;
-        this.activity = activity;
-        opt_buck = op_bucket;
-    }*/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.results);
         List<String> courses = new ArrayList<>();
-        courses.add("Wait");
+        //courses.add("Wait");
 
         RecyclerView rv = findViewById(R.id.results);
         rv.setLayoutManager(new LinearLayoutManager(this));
@@ -110,7 +104,6 @@ public class Results extends AppCompatActivity implements Runnable {
         final Courses cc = gson_c.fromJson(my_courses, Courses.class);
         List<String> due_assignments = new ArrayList<String>();
         String As_Line;
-       // Log.e("Result", cc.getCourseItems().toString());
         for (CourseItem item_c : cc.getCourseItems()) {
             String gsi = item_c.getCo_Grading_standard_id();
             if (item_c.getCo_Grading_standard_id() != null) {
@@ -164,14 +157,6 @@ public class Results extends AppCompatActivity implements Runnable {
             }
         });
 
-        /**adapter.setData(due_assignments);
-        ArrayAdapter<String> ListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, due_assignments);
-        ListView listview = findViewById(R.id.list);
-        listview.setAdapter(ListAdapter);*/
-        /**RecyclerView rv = findViewById(R.id.results);
-        /**rv.setLayoutManager(new LinearLayoutManager(this));
-        MyAdapter adapter = new MyAdapter(this, due_assignments);
-        rv.setAdapter(adapter);*/
 
     }
 
